@@ -38,42 +38,43 @@ class CreateLink extends Component {
     )
   }
 
-  _createLink = async () => {
-  const postedById = localStorage.getItem(GC_USER_ID)
-  if (!postedById) {
-    console.error('No user logged in')
-    return
-  }
-  const { description, url } = this.state
-  await this.props.createLinkMutation({
-    variables: {
-      description,
-      url,
-      postedById
+    _createLink = async () => {
+    const postedById = localStorage.getItem(GC_USER_ID)
+    if (!postedById) {
+      console.error('No user logged in')
+      return
     }
-  })
-  this.props.history.push(`/`)
+    const { description, url } = this.state
+    await this.props.createLinkMutation({
+      variables: {
+        description,
+        url,
+        postedById
+      }
+    })
+    this.props.history.push(`/`)
+  }
+
 }
 
-
-const CREATE_LINK_MUTATION = gql`
-  mutation CreateLinkMutation($description: String!, $url: String!, $postedById: ID!) {
-    createLink(
-      description: $description,
-      url: $url,
-      postedById: $postedById
-    ) {
-      id
-      createdAt
-      url
-      description
-      postedBy {
+  const CREATE_LINK_MUTATION = gql`
+    mutation CreateLinkMutation($description: String!, $url: String!, $postedById: ID!) {
+      createLink(
+        description: $description,
+        url: $url,
+        postedById: $postedById
+      ) {
         id
-        name
+        createdAt
+        url
+        description
+        postedBy {
+          id
+          name
+        }
       }
     }
-  }
-`
+  `
 
 // 3
 export default graphql(CREATE_LINK_MUTATION, { name: 'createLinkMutation' })(CreateLink)
