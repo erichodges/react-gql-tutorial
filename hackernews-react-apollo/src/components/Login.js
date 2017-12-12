@@ -100,20 +100,30 @@ const SIGNUP_USER_MUTATION = gql`
     }
   }
 `
-
+//Found this fix on youtube HowToGraphQL (React & Apollo) - Authentication (6/10) comment by Charles Fisher.
 const AUTHENTICATE_USER_MUTATION = gql`
   mutation AuthenticateUserMutation($email: String!, $password: String!) {
-    authenticateUser(
-      email: $email,
-      password: $password
-    ) {
+    authenticateUser(email: $email, password: $password) {
       token
-      user {
-        id
+      id
       }
     }
-  }
 `
+
+// Tutorial code:
+// const AUTHENTICATE_USER_MUTATION = gql`
+//   mutation AuthenticateUserMutation($email: String!, $password: String!) {
+//     authenticateUser(
+//       email: $email,
+//       password: $password
+//     ) {
+//       token
+//       user {
+//         id
+//       }
+//     }
+//   }
+// `
 
 export default compose(
   graphql(SIGNUP_USER_MUTATION, { name: 'signupUserMutation' }),
